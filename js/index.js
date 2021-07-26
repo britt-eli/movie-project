@@ -33,6 +33,34 @@ const addMovie = (movie) => fetch(`${serverURL}`, {
     })
     .catch(console.error);
 
+//update movie request
+const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movie)
+})
+    .then(res => res.json())
+    .then(data => {
+        console.log(`Success: created ${JSON.stringify(data)}`);
+        return data.id;
+    })
+    .catch(console.error);
+
+//delete movie
+const removeMovie = movie => fetch(`${serverURL}/${id}`, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+    .then(res => res.json())
+    .then(() => {
+        console.log(`Success: deleted ${title}`);
+    })
+    .catch(console.error);
+
 
 
 // fetch(serverURL)
@@ -88,10 +116,10 @@ const addMovie = (movie) => fetch(`${serverURL}`, {
 //
 // .then(data => console.log(data))
 //
-// DELETE METHOD
-// AJAX(serverURL + "/5","DELETE")
+//DELETE METHOD
+// $.ajax(serverURL + "/3","DELETE")
 //     .then(data => console.log(data))
-//
+
 // AJAX(serverURL)
 //     .then(data => console.log(data))
 
