@@ -16,12 +16,13 @@ const getAllMovies = () => fetch(serverURL).then(response => {
             console.log(movie);
             html += `<div class="card" style="width: 18rem;">
             <div class="card-body">
-    <h5 class="card-title">Title: ${movie.title}</h5>
+    <h5 class="card-title">${movie.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
     <p class="card-text">${movie.plot}</p>
     <p class="card-text">Actors: ${movie.actors}</p>
     <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
+    <p class="card-text">${movie.rating} Star(s)</p>
     <button type="submit" data-id="${movie.id}" id="submit-edit-modal" class="btn btn-primary editButton">Edit Movie</button>
     <button type="button" class="btn btn-danger" >Delete Movie</button>
      
@@ -81,7 +82,7 @@ const addMovie = (title, rating) => {
 
 $("#save-button").click (function (e){
     e.preventDefault();
-    addMovie($("#new-movie").val(),$("#new-rating").val());
+    addMovie($("#new-movie").val(), $('#new-year').val(), $('#new-plot').val(), $('#new-actors').val(), $('#new-director').val(), $('#new-rating').val(), $('#new-genre').val());
     // getAllMovies()
     $('#addMovieModal').modal('hide');
 });
