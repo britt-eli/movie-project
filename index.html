@@ -65,6 +65,51 @@
       </div>
     </div>
   </div>
+<!-----Movie List ----->
+
+<section class="container">
+
+  <div id="contain"></div>
+
+</section>
+
+<!------ Edit Modal ------>
+<div class="modal fade modal-style" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Movie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="movie-edit">Movie Title</label>
+            <input type="text" class="form-control autocomplete" id="movie-edit"
+                   placeholder="Movie Name">
+          </div>
+          <div class="form-group">
+            <label for="rating-edit">Rating</label>
+            <select class="form-control" id="rating-edit">
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="submit-edit-modal" class="btn btn-style">Submit Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <script src="js/jquery-2.x-git.js"></script>
