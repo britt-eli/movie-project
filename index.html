@@ -40,18 +40,18 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovieModal">
     Add A Movie
 </button>
 
 <!-- add a movie modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="addMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addmoviemodal">Add A Movie</h5>
+                <h5 class="modal-title">Add A Movie</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -62,6 +62,10 @@
                         <label for="new-movie">Movie Title</label>
                         <input type="text" class="form-control autocomplete" id="new-movie"
                                placeholder="Movie Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="moviePlot">Plot</label>
+                        <input type="text" class="form-control autocomplete" id="moviePlot" placeholder="Movie Plot">
                     </div>
                     <div class="form-group">
                         <label for="new-rating">Rating</label>
@@ -77,7 +81,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id = "save-button">Save changes</button>
+                <button type="submit" class="btn btn-primary" id ="save-button">Save changes</button>
             </div>
         </div>
     </div>
@@ -91,7 +95,7 @@
 </section>
 
 <!------ Edit Modal ------>
-<div class="modal fade modal-style" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+<div class="modal fade modal-style" id="editMovieModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -108,6 +112,19 @@
                         <input type="text" class="form-control autocomplete" id="movie-edit"
                                placeholder="Movie Name">
                     </div>
+                    <div class="form-group">
+                        <label for="year-edit">Year</label>
+                        <input type="text" class="form-control autocomplete" id="year-edit" placeholder="Movie Year">
+                    </div>
+                    <div class="form-group">
+                        <label for="plot-edit">Plot</label>
+                        <input type="text" class="form-control autocomplete" id="plot-edit" placeholder="Movie Plot">
+                    </div>
+                    <div class="form-group">
+                        <label for="actors-edit">Actors</label>
+                        <input type="text" class="form-control autocomplete" id="actors-edit" placeholder="Movie Actors">
+                    </div>
+
                     <div class="form-group">
                         <label for="rating-edit">Rating</label>
                         <select class="form-control" id="rating-edit">
@@ -129,7 +146,7 @@
 </div>
 
 <!------ Delete Modal ------>
-<div class="modal fade modal-style" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+<div class="modal fade modal-style" id="deleteMovieModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

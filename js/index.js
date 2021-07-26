@@ -1,11 +1,12 @@
 "use strict"
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
-
+let localMovies = [];
 
 //get all movies
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
+        localMovies = movies;
         var html = '';
         $('#loading').hide(3000);
         $("#addForm").show();
@@ -21,11 +22,13 @@ const getAllMovies = () => fetch(serverURL).then(response => {
     <p class="card-text">Actors: ${movie.actors}</p>
     <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
+    <button type="submit" data-id="${movie.id}" id="submit-edit-modal" class="btn btn-primary editButton">Edit Movie</button>
+    <button type="button" class="btn btn-danger" >Delete Movie</button>
+     
     
   </div>
 </div>`;
-
-            $('#contain').append(html)
+            $('#contain').html(html)
         });
     }).then(() => {
         addEditClickEvent();
@@ -34,6 +37,20 @@ const getAllMovies = () => fetch(serverURL).then(response => {
 });
 getAllMovies();
 
+function addEditClickEvent() {
+    $('.editButton').click(function (){
+     const movieID = $(this).attr('data-id')
+        const movieToUpdate = localMovies.filter(function(movie) {
+        if(movie.id == movieID) {
+            return true;
+        }else{
+            return false;
+        }
+    }); $('#editMovieModal').modal('show');
+
+        console.log(movieToUpdate);
+    })
+}
 
 //get single movie
 const getAMovie = id => fetch(`${serverURL}/${id}`)
@@ -55,6 +72,7 @@ const addMovie = (title, rating) => {
     })
         .then(res => res.json())
         .then(data => {
+            getAllMovies();
             console.log(`Success: created ${JSON.stringify(data)}`);
             return data.id;
         })
@@ -64,8 +82,10 @@ const addMovie = (title, rating) => {
 $("#save-button").click (function (e){
     e.preventDefault();
     addMovie($("#new-movie").val(),$("#new-rating").val());
-    getAllMovies()
+    // getAllMovies()
+    $('#addMovieModal').modal('hide');
 });
+
 
 //update movie request
 const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
