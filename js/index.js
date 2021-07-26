@@ -4,11 +4,28 @@ const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
 
 
 //get all movies
-fetch(serverURL).then(response => {
-    response.json().then(movies =>{
-        console.log(movies)
+const getAllMovies = id => fetch(serverURL).then(response => {
+    response.json().then(movies => {
+        var html = '';
+        $('#contain').empty();
+
+        movies.forEach(function (movie) {
+            console.log(movie);
+            html += `<div class="card" style="width: 18rem;">
+            <div class="card-body">
+    <h5 class="card-title">${movie.title}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
+    <p class="card-text">${movie.plot}</p>
+    <p class="card-text">${movie.genre}</p>
+  </div>
+</div>`;
+
+            $('#contain').append(html)
+        })
     });
 });
+getAllMovies();
+
 
 //get single movie
 const getAMovie = id => fetch(`${serverURL}/${id}`)
@@ -60,7 +77,6 @@ const removeMovie = movie => fetch(`${serverURL}/${id}`, {
         console.log(`Success: deleted ${title}`);
     })
     .catch(console.error);
-
 
 
 // fetch(serverURL)
