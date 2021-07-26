@@ -4,24 +4,32 @@ const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
 
 
 //get all movies
-const getAllMovies = id => fetch(serverURL).then(response => {
+const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
         var html = '';
+        $('#loading').hide(3000);
+        $("#addForm").show();
         $('#contain').empty();
 
         movies.forEach(function (movie) {
             console.log(movie);
             html += `<div class="card" style="width: 18rem;">
             <div class="card-body">
-    <h5 class="card-title">${movie.title}</h5>
+    <h5 class="card-title">Title: ${movie.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
     <p class="card-text">${movie.plot}</p>
+    <p class="card-text">Actors: ${movie.actors}</p>
+    <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
+    
   </div>
 </div>`;
 
             $('#contain').append(html)
-        })
+        });
+    }).then(() => {
+        addEditClickEvent();
+        addDeleteClickEvent();
     });
 });
 getAllMovies();
@@ -36,19 +44,28 @@ const getAMovie = id => fetch(`${serverURL}/${id}`)
 // getAMovie(2).then(result => console.log(result));
 
 //Add movie to database
-const addMovie = (movie) => fetch(`${serverURL}`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(movie)
-})
-    .then(res => res.json())
-    .then(data => {
-        console.log(`Success: created ${JSON.stringify(data)}`);
-        return data.id;
+const addMovie = (title, rating) => {
+    const movie = {title: title, rating: rating}
+    fetch(`${serverURL}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movie)
     })
-    .catch(console.error);
+        .then(res => res.json())
+        .then(data => {
+            console.log(`Success: created ${JSON.stringify(data)}`);
+            return data.id;
+        })
+        .catch(console.error);
+}
+
+$("#save-button").click (function (e){
+    e.preventDefault();
+    addMovie($("#new-movie").val(),$("#new-rating").val());
+    getAllMovies()
+});
 
 //update movie request
 const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
