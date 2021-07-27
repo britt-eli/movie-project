@@ -1,3 +1,17 @@
-.header-title {
-    font-family: ;
+#movieContainer {
+    display: flex;
+    justify-content: space-between;
+}
+h2 {
+    font-family: 'Acme', sans-serif;
+    text-align: center;
+    font-size: xxx-large;
+}
+#loading {
+    display: flex;
+    align-items: center;
+
+}
+#searchbar {
+
 }

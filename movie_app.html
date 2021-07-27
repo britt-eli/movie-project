@@ -6,10 +6,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="css/movie-project-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 <style>
     @font-face {
         font-family: 'Pricedown';
-        src: url('../movie-project/css/pricedown.ttf') format('truetype');
+        src: url('/css/pricedown.ttf') format('truetype');
     }
 
 </style>
@@ -25,7 +26,7 @@
             <!--     <img src="images/empty-chairs.jpg" height="507" width="760"/>-->
         </div>
         <div>
-            <h2 class="header-title">We love movies</h2>
+            <h2 class="header-title">WE &#10084 MOVIES</h2>
         </div>
     </div>
 
@@ -34,7 +35,7 @@
             <!--      <img src="img/pexels-adrien-olichon-3709370.jpg" alt="Movie Theater">-->
         </div>
         <div>
-            <h2 class="title-style-sm">We love movies</h2>
+            <h2 class="title-style-sm">We &#10084 movies</h2>
         </div>
     </div>
 
@@ -46,9 +47,13 @@
 </div>
 
 <!-- Button trigger modal -->
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovieModal">
     Add A Movie
 </button>
+<form class="form-inline">
+    <input class="form-control" id='searchbar' type="search" placeholder="JUST FOR LOOKS" aria-label="Search">
+</form>
 
 <!-- add a movie modal -->
 
