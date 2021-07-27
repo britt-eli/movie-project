@@ -13,7 +13,7 @@ $("#save-button").click(function (e) {
     $('#addMovieModal').modal('hide');
 });
 
-//-----------------------EDIT CLICK EVENT ON MODAL CARD. STILL NEED TO ADD SUBMIT FUNCTIONALITY------->
+//-----------------------EDIT CLICK EVENT ON MODAL CARD. INFORMATION FROM LAST EDITED MOVIE GETS OVERRIDDEN BY NEW INFO.------->
 function addEditClickEvent() {
     $('.editButton').click(function (e) {
         e.preventDefault();
@@ -90,8 +90,8 @@ const getAllMovies = () => fetch(serverURL).then(response => {
     <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
     <p class="card-text">${movie.rating} Star(s)</p>
-    <button type="submit" data-id=${movie.id}  class="btn btn-primary editButton">Edit Movie</button>
-    <button type="button" data-id=${movie.id} class="btn btn-danger deleteButton" >Delete Movie</button>
+    <button type="submit" data-id=${movie.id}  class="btn-md btn-primary editButton">Edit Movie</button>
+    <button type="button" data-id=${movie.id} class="btn-md btn-danger deleteButton" >Delete Movie</button>
  
   </div>
 </div>`;

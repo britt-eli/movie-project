@@ -1,6 +1,8 @@
 #movieContainer {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }
 h2 {
     font-family: 'Acme', sans-serif;
