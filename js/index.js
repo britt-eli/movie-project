@@ -1,16 +1,15 @@
 "use strict"
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
-let localMovies = [];
+//let localMovies = [];
 
 //get all movies
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
-        localMovies = movies;
         var html = '';
         $('#loading').hide(3000);
         $("#addForm").show();
-        $('#contain').empty();
+        $('#movieContainer').empty();
 
         movies.forEach(function (movie) {
             console.log(movie);
@@ -23,13 +22,12 @@ const getAllMovies = () => fetch(serverURL).then(response => {
     <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
     <p class="card-text">${movie.rating} Star(s)</p>
-    <button type="submit" data-id="${movie.id}" id="submit-edit-modal" class="btn btn-primary editButton">Edit Movie</button>
+    <button type="submit" data-id="${movie.id}" id="edit-submit-button" class="btn btn-primary editButton">Edit Movie</button>
     <button type="button" class="btn btn-danger deleteButton" >Delete Movie</button>
-     
-    
+ 
   </div>
 </div>`;
-            $('#contain').html(html)
+            $('#movieContainer').html(html)
         });
     }).then(() => {
         addEditClickEvent();
@@ -38,96 +36,122 @@ const getAllMovies = () => fetch(serverURL).then(response => {
 });
 getAllMovies();
 
+//CLICK EVENTS FOR EDIT AND DELETE ON CARDS/MODAL
+
 function addEditClickEvent() {
-    $('.editButton').click(function (){
-     const movieID = $(this).attr('data-id')
-        const movieToUpdate = localMovies.filter(function(movie) {
-        if(movie.id == movieID) {
-            return true;
-        }else{
-            return false;
+    $('.editButton').click(function () {
+        const movieID = $(this).attr('data-id')
+        $('#edit-submit-button').off();
+        $('#edit-submit-button').click(function () {
+            let editedTitle = $('#new-movie').val();
+            let editedRating = $('#new-rating').val();
+            let editedPlot = $('#new-plot').val();
+            let editedYear = $('#new-year').val();
+            let editedActors = $('#new-actors').val();
+            let editedGenre = $('#new-genre').val();
+            let editedDirector = $('#new-director').val()
+            let editedMovie = {
+                id: movieID, title: editedTitle, rating: editedRating, plot: editedPlot,
+                year: editedYear, actors: editedActors, director: editedDirector, genre: editedGenre
+            };
+            updateMovie(editedMovie).then(() => {
+                $('#movieContainer').empty();
+                getAllMovies()
+            })
+        })
+        $('#editMovieModal').modal('show');
+    })
+}
+
+        // const movieToUpdate = localMovies.filter(function(movie) {
+//         if(movie.id == movieID) {
+//             return true;
+//         }else{
+//             return false;
+//         }
+//     }); $('#editMovieModal').modal('show');//need to add functionality to submit button to hide?
+//
+//         console.log(movieToUpdate);
+//     })
+// }
+        const addDeleteClickEvent = () => {
+            $('.deleteButton').click(function () {
+                let deletedMovieID = $(this).attr('data-id')
+                $('#delete-submit-button').off();
+                $('#delete-submit-button').click(function () {
+                    deleteMovie(deletedMovieID).then(() => {
+                        $('#movieContainer').empty();
+                        getAllMovies();
+                    });
+                });
+                $('#deleteMovieModal').modal('show');
+            });
         }
-    }); $('#editMovieModal').modal('show');
-
-        console.log(movieToUpdate);
-    })
-}
-function addDeleteClickEvent() {
-    $('.deleteButton').click(function (){
-        const deletedMovieID = $(this).attr('data-id')
-        const movieToDelete = localMovies.filter(function(movie) {
-            if(movie.id == deletedMovieID) {
-                return true;
-            }else{
-                return false;
-            }
-        }); $('#deleteMovieModal').modal('show');
-
-        console.log(movieToDelete);
-    })
-}
 // get single movie
-const getAMovie = id => fetch(`${serverURL}/${id}`)
-    .then(res => res.json())
-    .catch(error => console.error(error));
+        const getAMovie = id => fetch(`${serverURL}/${id}`)
+            .then(res => res.json())
+            .catch(error => console.error(error));
 
 //console.log to check if we can pull a single movie
 // getAMovie(2).then(result => console.log(result));
 
 //Add movie to database
-const addMovie = (title, rating) => {
-    const movie = {title: title, rating: rating}
-    fetch(`${serverURL}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(movie)
-    })
-        .then(res => res.json())
-        .then(data => {
-            getAllMovies();
-            console.log(`Success: created ${JSON.stringify(data)}`);
-            return data.id;
-        })
-        .catch(console.error);
-}
+        const addMovie = (title, rating) => {
+            const movie = {title: title, rating: rating}
+            fetch(`${serverURL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movie)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    getAllMovies();
+                    console.log(`Success: created ${JSON.stringify(data)}`);
+                    return data.id;
+                })
+                .catch(console.error);
+        }
 
-$("#save-button").click (function (e){
-    e.preventDefault();
-    addMovie($("#new-movie").val(), $('#new-year').val(), $('#new-plot').val(), $('#new-actors').val(), $('#new-director').val(), $('#new-rating').val(), $('#new-genre').val());
-    // getAllMovies()
-    $('#addMovieModal').modal('hide');
-});
+
+//MOVE SOMEWHERE ELSE. USED TO SAVE MOVIE TO DB
+        $("#save-button").click(function (e) {
+            e.preventDefault();
+            addMovie($("#new-movie").val(), $('#new-year').val(), $('#new-plot').val(), $('#new-actors').val(), $('#new-director').val(), $('#new-rating').val(), $('#new-genre').val());
+            // getAllMovies()
+            $('#addMovieModal').modal('hide');
+        });
 
 
 //update movie request
-const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
-    method: 'PUT',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(movie)
-})
-    .then(res => res.json())
-    .then(data => {
-        console.log(`Success: created ${JSON.stringify(data)}`);
-        return data.id;
-    })
-    .catch(console.error);
+        const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(movie)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(`Success: created ${JSON.stringify(data)}`);
+                return data.id;
+            })
+            .catch(console.error);
 
 //delete movie
-const removeMovie = movie => fetch(`${serverURL}/${id}`, {
-    method: 'DELETE',
-    headers: {
-        'Content-Type': 'application/json',
-    }
-})
-    .then(res => res.json())
-    .then(() => {
-        console.log(`Success: deleted ${title}`);
-    })
-    .catch(console.error);
+        const deleteMovie = id => fetch(`${serverURL}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(res => res.json())
+            .then(() => {
+                console.log(`Success: deleted ${id}`);
+            })
+            .catch(console.error);
+
 
 
 // fetch(serverURL)
@@ -191,4 +215,3 @@ const removeMovie = movie => fetch(`${serverURL}/${id}`, {
 //     .then(data => console.log(data))
 
 //
-
