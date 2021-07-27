@@ -18,7 +18,7 @@ function addEditClickEvent() {
     $('.editButton').click(function (e) {
         e.preventDefault();
         const movieID = $(this).attr('data-id')
-       $('#editMovieModal').modal('show');
+        $('#editMovieModal').modal('show');
         $('#edit-submit-button').click(function () {
             let editedTitle = $('#movie-edit').val();
             let editedRating = $('#rating-edit').val();
@@ -107,71 +107,66 @@ getAllMovies();
 //CLICK EVENTS FOR EDIT AND DELETE ON CARDS/MODAL
 
 // get single movie
-        const getAMovie = id => fetch(`${serverURL}/${id}`)
-            .then(res => res.json())
-            .catch(error => console.error(error));
+const getAMovie = id => fetch(`${serverURL}/${id}`)
+    .then(res => res.json())
+    .catch(error => console.error(error));
 
 //console.log to check if we can pull a single movie
 // getAMovie(2).then(result => console.log(result));
 
 //----------------ADD MOVIE TO DATABASE, CONNECTED WITH THE #SAVE-BUTTON------------->
-        const addMovie = (newMovie) => {
-            const movie = {title: newMovie.title, rating: newMovie.rating, }
-            fetch(`${serverURL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(movie)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    getAllMovies();
-                    console.log(`Success: created ${JSON.stringify(data)}`);
-                    return data.id;
-                })
-                .catch(console.error);
-        }
-
-
-
+const addMovie = (newMovie) => {
+    const movie = {
+        title: newMovie.title, rating: newMovie.rating, genre: newMovie.genre,
+        actors: newMovie.actors, director: newMovie.director, year: newMovie.year
+    };
+    fetch(`${serverURL}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movie)
+    })
+        .then(res => res.json())
+        .then(data => {
+            getAllMovies();
+            console.log(`Success: created ${JSON.stringify(data)}`);
+            return data.id;
+        })
+        .catch(console.error);
+}
 
 
 //---------------------UPDATE MOVIE------------------------------------>
-        const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(movie)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(`Success: created ${JSON.stringify(data)}`);
-                return data.id;
-            })
-            .catch(console.error);
+const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movie)
+})
+    .then(res => res.json())
+    .then(data => {
+        console.log(`Success: created ${JSON.stringify(data)}`);
+        return data.id;
+    })
+    .catch(console.error);
 
 //------------------DELETE MOVIE----------------------------------->
-        const deleteMovie = id => fetch(`${serverURL}/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(res => res.json())
-            .then(() => {
-                console.log(`Success: deleted ${id}`);
-            })
-            .catch(console.error);
+const deleteMovie = id => fetch(`${serverURL}/${id}`, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+    .then(res => res.json())
+    .then(() => {
+        console.log(`Success: deleted ${id}`);
+    })
+    .catch(console.error);
 
 
-
-
-
-
-
-        // LECTURE NOTES
+// LECTURE NOTES
 
 // fetch(serverURL)
 //     .then(res => res.json())
