@@ -24,7 +24,7 @@ const getAllMovies = () => fetch(serverURL).then(response => {
     <p class="card-text">${movie.genre}</p>
     <p class="card-text">${movie.rating} Star(s)</p>
     <button type="submit" data-id="${movie.id}" id="submit-edit-modal" class="btn btn-primary editButton">Edit Movie</button>
-    <button type="button" class="btn btn-danger" >Delete Movie</button>
+    <button type="button" class="btn btn-danger deleteButton" >Delete Movie</button>
      
     
   </div>
@@ -52,8 +52,21 @@ function addEditClickEvent() {
         console.log(movieToUpdate);
     })
 }
+function addDeleteClickEvent() {
+    $('.deleteButton').click(function (){
+        const deletedMovieID = $(this).attr('data-id')
+        const movieToDelete = localMovies.filter(function(movie) {
+            if(movie.id == deletedMovieID) {
+                return true;
+            }else{
+                return false;
+            }
+        }); $('#deleteMovieModal').modal('show');
 
-//get single movie
+        console.log(movieToDelete);
+    })
+}
+// get single movie
 const getAMovie = id => fetch(`${serverURL}/${id}`)
     .then(res => res.json())
     .catch(error => console.error(error));
