@@ -7,8 +7,16 @@ const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
 //MOVE SOMEWHERE ELSE. USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON)
 $("#save-button").click(function (e) {
     e.preventDefault();
-    addMovie($("#new-movie").val(), $('#new-rating').val(), $('#new-plot').val(),
-        $('#new-actors').val(), $('#new-director').val(), $('#new-year').val(), $('#new-genre').val());
+    const movieToAdd = {
+        title: $("#new-movie").val(),
+        rating: $('#new-rating').val(),
+        genre: $('#new-genre').val(),
+        actors: $('#new-actors').val(),
+        director: $('#new-director').val(),
+        year: $('#new-year').val(),
+        plot: $('#new-plot').val()
+    }
+    addMovie(movieToAdd)
     // getAllMovies()
     $('#addMovieModal').modal('hide');
 });
@@ -18,6 +26,15 @@ function addEditClickEvent() {
     $('.editButton').click(function (e) {
         e.preventDefault();
         const movieID = $(this).attr('data-id')
+        const originalMovie = localMovies.filter (movie => movieID == movie.id)[0]
+        $('#movie-edit').val(originalMovie.title);
+        $('#rating-edit').val(originalMovie.rating);
+        $('#plot-edit').val(originalMovie.plot);
+        $('#year-edit').val(originalMovie.year);
+        $('#actors-edit').val(originalMovie.actors);
+        $('#genre-edit').val(originalMovie.genre);
+        $('#director-edit').val(originalMovie.director)
+
         $('#editMovieModal').modal('show');
         $('#edit-submit-button').click(function () {
             let editedTitle = $('#movie-edit').val();
@@ -36,6 +53,13 @@ function addEditClickEvent() {
                 $('#editMovieModal').modal('hide');
                 getAllMovies();
 
+                $('#movie-edit').val('');
+                $('#rating-edit').val('');
+                $('#plot-edit').val('');
+                $('#year-edit').val('');
+                $('#actors-edit').val('');
+                $('#genre-edit').val('');
+                $('#director-edit').val('')
             })
         })
 
@@ -70,7 +94,7 @@ function addDeleteClickEvent() {
 //     $('#addMovieModal').modal('hide');
 // });
 
-
+let localMovies
 //----------RENDER ALL MOVIES--------------->
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
@@ -78,7 +102,7 @@ const getAllMovies = () => fetch(serverURL).then(response => {
         $('#loading').hide(3000);
         $("#addForm").show();
         $('#movieContainer').empty();
-
+localMovies = movies
         movies.forEach(function (movie) {
             console.log(movie);
             html += `<div class="card" style="width: 18rem;">
@@ -116,16 +140,13 @@ const getAMovie = id => fetch(`${serverURL}/${id}`)
 
 //----------------ADD MOVIE TO DATABASE, CONNECTED WITH THE #SAVE-BUTTON------------->
 const addMovie = (newMovie) => {
-    const movie = {
-        title: newMovie.title, rating: newMovie.rating, genre: newMovie.genre,
-        actors: newMovie.actors, director: newMovie.director, year: newMovie.year
-    };
+
     fetch(`${serverURL}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(movie)
+        body: JSON.stringify(newMovie)
     })
         .then(res => res.json())
         .then(data => {
