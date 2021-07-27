@@ -142,6 +142,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="director-edit">Director</label>
+                        <input type="text" class="form-control autocomplete" id="director-edit" placeholder="Movie Director">
+                    </div>
+                    <div class="form-group">
+                        <label for="genre-edit">Genre(s)</label>
+                        <input type="text" class="form-control autocomplete" id="genre-edit" placeholder="Genre(s)">
+                    </div>
+
+                    <div class="form-group">
                         <label for="rating-edit">Rating</label>
                         <select class="form-control" id="rating-edit">
                             <option>5</option>
@@ -155,7 +164,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="edit-submit-button" class="btn btn-style">Submit Changes</button>
+                <button type="submit" id="edit-submit-button" class="btn btn-primary">Submit Changes</button>
             </div>
         </div>
     </div>
@@ -177,7 +186,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="delete-submit-button" class="btn btn-style delete-submit-button">Delete</button>
+                <button type="submit" id="confirm-delete-button" class="btn btn-danger confirm-delete-button">Delete</button>
             </div>
         </div>
     </div>

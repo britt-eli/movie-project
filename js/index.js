@@ -1,9 +1,77 @@
 "use strict"
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
-//let localMovies = [];
 
-//get all movies
+//CLICK EVENTS LIVE HERE
+
+//MOVE SOMEWHERE ELSE. USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON)
+$("#save-button").click(function (e) {
+    e.preventDefault();
+    addMovie($("#new-movie").val(), $('#new-rating').val(), $('#new-plot').val(),
+        $('#new-actors').val(), $('#new-director').val(), $('#new-year').val(), $('#new-genre').val());
+    // getAllMovies()
+    $('#addMovieModal').modal('hide');
+});
+
+//-----------------------EDIT CLICK EVENT ON MODAL CARD. STILL NEED TO ADD SUBMIT FUNCTIONALITY------->
+function addEditClickEvent() {
+    $('.editButton').click(function (e) {
+        e.preventDefault();
+        const movieID = $(this).attr('data-id')
+       $('#editMovieModal').modal('show');
+        $('#edit-submit-button').click(function () {
+            let editedTitle = $('#movie-edit').val();
+            let editedRating = $('#rating-edit').val();
+            let editedPlot = $('#plot-edit').val();
+            let editedYear = $('#year-edit').val();
+            let editedActors = $('#actors-edit').val();
+            let editedGenre = $('#genre-edit').val();
+            let editedDirector = $('#director-edit').val()
+            let editedMovie = { //create an edited new movie object
+                id: movieID, title: editedTitle, rating: editedRating, plot: editedPlot,
+                year: editedYear, actors: editedActors, director: editedDirector, genre: editedGenre
+            };
+            updateMovie(editedMovie).then(() => {
+                $('#movieContainer').empty();
+                $('#editMovieModal').modal('hide');
+                getAllMovies();
+
+            })
+        })
+
+    })
+}
+
+//-----------------------DELETE CLICK EVENT. NEED TO UPDATE SUBMIT WHEN ASKED ARE YOU SURE------------->
+function addDeleteClickEvent() {
+    $('.deleteButton').click(function (e) {
+        e.preventDefault();
+        $('#deleteMovieModal').modal('show');
+        let deletedMovieID = $(this).attr('data-id'); //cannot use this inside => function
+        console.log(deletedMovieID);
+        //$('#confirm-delete-button').off();
+        $('#confirm-delete-button').click(function () {
+            deleteMovie(deletedMovieID).then(() => {
+                $('#movieContainer').empty();
+                $('#deleteMovieModal').modal('hide');
+                getAllMovies();
+            });
+
+        });
+
+    });
+}
+
+// $("#confirm-delete-button").click(function (e) {
+//     e.preventDefault();
+//     deleteMovie($("#new-movie").val(), $('#new-rating').val(), $('#new-plot').val(),
+//         $('#new-actors').val(), $('#new-director').val(), $('#new-year').val(), $('#new-genre').val());
+//     // getAllMovies()
+//     $('#addMovieModal').modal('hide');
+// });
+
+
+//----------RENDER ALL MOVIES--------------->
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
         var html = '';
@@ -22,8 +90,8 @@ const getAllMovies = () => fetch(serverURL).then(response => {
     <p class="card-text">Director: ${movie.director}</p>
     <p class="card-text">${movie.genre}</p>
     <p class="card-text">${movie.rating} Star(s)</p>
-    <button type="submit" data-id="${movie.id}" id="edit-submit-button" class="btn btn-primary editButton">Edit Movie</button>
-    <button type="button" class="btn btn-danger deleteButton" >Delete Movie</button>
+    <button type="submit" data-id=${movie.id}  class="btn btn-primary editButton">Edit Movie</button>
+    <button type="button" data-id=${movie.id} class="btn btn-danger deleteButton" >Delete Movie</button>
  
   </div>
 </div>`;
@@ -38,55 +106,6 @@ getAllMovies();
 
 //CLICK EVENTS FOR EDIT AND DELETE ON CARDS/MODAL
 
-function addEditClickEvent() {
-    $('.editButton').click(function () {
-        const movieID = $(this).attr('data-id')
-        $('#edit-submit-button').off();
-        $('#edit-submit-button').click(function () {
-            let editedTitle = $('#new-movie').val();
-            let editedRating = $('#new-rating').val();
-            let editedPlot = $('#new-plot').val();
-            let editedYear = $('#new-year').val();
-            let editedActors = $('#new-actors').val();
-            let editedGenre = $('#new-genre').val();
-            let editedDirector = $('#new-director').val()
-            let editedMovie = {
-                id: movieID, title: editedTitle, rating: editedRating, plot: editedPlot,
-                year: editedYear, actors: editedActors, director: editedDirector, genre: editedGenre
-            };
-            updateMovie(editedMovie).then(() => {
-                $('#movieContainer').empty();
-                getAllMovies()
-            })
-        })
-        $('#editMovieModal').modal('show');
-    })
-}
-
-        // const movieToUpdate = localMovies.filter(function(movie) {
-//         if(movie.id == movieID) {
-//             return true;
-//         }else{
-//             return false;
-//         }
-//     }); $('#editMovieModal').modal('show');//need to add functionality to submit button to hide?
-//
-//         console.log(movieToUpdate);
-//     })
-// }
-        const addDeleteClickEvent = () => {
-            $('.deleteButton').click(function () {
-                let deletedMovieID = $(this).attr('data-id')
-                $('#delete-submit-button').off();
-                $('#delete-submit-button').click(function () {
-                    deleteMovie(deletedMovieID).then(() => {
-                        $('#movieContainer').empty();
-                        getAllMovies();
-                    });
-                });
-                $('#deleteMovieModal').modal('show');
-            });
-        }
 // get single movie
         const getAMovie = id => fetch(`${serverURL}/${id}`)
             .then(res => res.json())
@@ -95,9 +114,9 @@ function addEditClickEvent() {
 //console.log to check if we can pull a single movie
 // getAMovie(2).then(result => console.log(result));
 
-//Add movie to database
-        const addMovie = (title, rating) => {
-            const movie = {title: title, rating: rating}
+//----------------ADD MOVIE TO DATABASE, CONNECTED WITH THE #SAVE-BUTTON------------->
+        const addMovie = (newMovie) => {
+            const movie = {title: newMovie.title, rating: newMovie.rating, }
             fetch(`${serverURL}`, {
                 method: 'POST',
                 headers: {
@@ -115,16 +134,10 @@ function addEditClickEvent() {
         }
 
 
-//MOVE SOMEWHERE ELSE. USED TO SAVE MOVIE TO DB
-        $("#save-button").click(function (e) {
-            e.preventDefault();
-            addMovie($("#new-movie").val(), $('#new-year').val(), $('#new-plot').val(), $('#new-actors').val(), $('#new-director').val(), $('#new-rating').val(), $('#new-genre').val());
-            // getAllMovies()
-            $('#addMovieModal').modal('hide');
-        });
 
 
-//update movie request
+
+//---------------------UPDATE MOVIE------------------------------------>
         const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
             method: 'PUT',
             headers: {
@@ -139,7 +152,7 @@ function addEditClickEvent() {
             })
             .catch(console.error);
 
-//delete movie
+//------------------DELETE MOVIE----------------------------------->
         const deleteMovie = id => fetch(`${serverURL}/${id}`, {
             method: 'DELETE',
             headers: {
@@ -153,6 +166,12 @@ function addEditClickEvent() {
             .catch(console.error);
 
 
+
+
+
+
+
+        // LECTURE NOTES
 
 // fetch(serverURL)
 //     .then(res => res.json())
