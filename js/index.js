@@ -81,7 +81,7 @@ const getAllMovies = () => fetch(serverURL).then(response => {
 
         movies.forEach(function (movie) {
             console.log(movie);
-            html += `<div class="card" style="width: 18rem;">
+            html += `<div class="card" style="width: 18rem; height: 25rem">
             <div class="card-body">
     <h5 class="card-title">${movie.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
