@@ -18,42 +18,17 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
             }
 
             addMovie(movieToAdd);
-//         var html = '';
-//         $('#loading').hide(5000);
-//         $("#addForm").show();
-//         $('#movieContainer').empty();
-//         localMovies = movies
-//         movies.forEach(function (movie) {
-//             console.log(movie);
-//             html += `<div class="card" style="width: 18rem; height: 25rem;">
-//             <div class="card-body">
-//     <h5 class="card-title">${movie.title}</h5>
-//     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
-//     <p class="card-text">${movie.plot}</p>
-//     <p class="card-text">Actors: ${movie.actors}</p>
-//     <p class="card-text">Director: ${movie.director}</p>
-//     <p class="card-text">${movie.genre}</p>
-//     <p class="card-text">${movie.rating} Star(s)</p>
-//     <button type="submit" data-id=${movie.id}  class="btn-md btn-primary editButton">Edit Movie</button>
-//     <button type="button" data-id=${movie.id} class="btn-md btn-danger deleteButton" >Delete Movie</button>
-//
-//   </div>
-// </div>`;
-//             $('#movieContainer').html(html)
-//         });
-//     }).then(() => {
-//         addEditClickEvent();
-//         addDeleteClickEvent();
-//     });
+
         });
     })
 }
-// getMoviesfromOMBDAPI();
+
 
 //----------USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON)------>
     $("#save-button").click(function (e) {
         e.preventDefault();
         const movieToAdd = {
+            poster: $("new-poster-url").val(),
             title: $("#new-movie").val(),
             rating: $('#new-rating').val(),
             genre: $('#new-genre').val(),
@@ -154,6 +129,7 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
                 console.log(movie);
                 html += `<div class="card" style="width: 18rem; height: 25rem;">
             <div class="card-body">
+            <img src="${movie.poster}" class="card-img-top" alt="...">
     <h5 class="card-title">${movie.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
     <p class="card-text">${movie.plot}</p>
