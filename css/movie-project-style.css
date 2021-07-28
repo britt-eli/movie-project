@@ -1,25 +1,22 @@
-#movieContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-basis: auto;
-}
-.card-title, .card-subtitle {
-    font-family: 'Pricedown';
-    text-align: center;
-    font-size: x-large;
-}
-h1{
-    font-size: xxx-large;
-    text-align: center;
-}
-#loading {
-    display: flex;
-    align-items: center;
-
-}
-.header-title {
-    font-family: 'Pricedown';
+body {
+    background-color: darkred;
 }
 
+.navbar-brand {
+    display: flex;
+    text-align: center;
+    font-family: 'Pricedown';
+    font-size: 75px;
+    color: white;
+}
+h3, h5 {
+    font-family: 'Pricedown';
+}
+.card{
+    background-color: lightgray;
+    color: black;
+    border: 2px solid grey;
+}
+.card:hover {
+    box-shadow: 0px 10px 50px rgb(149, 19, 19);
+}

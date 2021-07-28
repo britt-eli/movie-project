@@ -7,53 +7,44 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="css/movie-project-style.css">
     <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-<style>
-    @font-face {
-        font-family: 'Pricedown';
-        src: url('./css/pricedown.ttf') format('truetype');
-    }
-
-</style>
-
+    <style>
+        @font-face {
+            font-family: 'Pricedown';
+            src: url('./css/pricedown.ttf') format('truetype');
+        }
+    </style>
 </head>
-
-
 <body>
-<header class="container">
-
-    <div class="movie-header d-none d-lg-block d-md-none">
-        <div class="branding">
-            <!--     <img src="images/empty-chairs.jpg" height="507" width="760"/>-->
-        </div>
-        <div>
-            <h1 class="header-title">WE &#10084 MOVIES</h1>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <h1 class="navbar-brand text-center">WE &#10084 MOVIES</h1>
         </div>
     </div>
+</nav>
 
-    <div class="brand-img-sm d-block d-lg-none">
-        <div class="branding">
-            <!--      <img src="img/pexels-adrien-olichon-3709370.jpg" alt="Movie Theater">-->
-        </div>
-        <div>
-            <h2 class="title-style-sm">We &#10084 movies</h2>
-        </div>
+<div class="container">
+    <div class="jumbotron">
+        <h3 class="text-center"> SEARCH FOR ANY MOVIE</h3>
+        <form id="searchForm">
+            <input type="text" class="form-control" id="searchMovie" placeholder="Search Movie">
+        </form>
     </div>
+</div>
 
-</header>
 
-
-<div id="loading">
+<div class="row" id="loading">
     <img id="loading-image" src="https://media.giphy.com/media/3o7bu3XilJ5BOiSGic/giphy.gif" alt="Loading..."/>
 </div>
 
 <!-- Button trigger modal -->
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovieModal">
-    Add A Movie
-</button>
-<form class="form-inline">
-    <input class="form-control" id='searchbar' type="search" placeholder="JUST FOR LOOKS" aria-label="Search">
-</form>
+<div id="addAMovie">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovieModal">
+        Add A Movie
+    </button>
+</div>
+
 
 <!-- add a movie modal -->
 
@@ -76,7 +67,8 @@
                     </div>
                     <div class="form-group">
                         <label for="new-year">Year</label>
-                        <input type="text" class="form-control autocomplete" id="new-year" placeholder="Year of Release">
+                        <input type="text" class="form-control autocomplete" id="new-year"
+                               placeholder="Year of Release">
                     </div>
                     <div class="form-group">
                         <label for="new-plot">Plot</label>
@@ -88,7 +80,8 @@
                     </div>
                     <div class="form-group">
                         <label for="new-director">Director</label>
-                        <input type="text" class="form-control autocomplete" id="new-director" placeholder="Movie Director">
+                        <input type="text" class="form-control autocomplete" id="new-director"
+                               placeholder="Movie Director">
                     </div>
                     <div class="form-group">
                         <label for="new-genre">Genre(s)</label>
@@ -108,7 +101,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id ="save-button">Save changes</button>
+                <button type="submit" class="btn btn-primary" id="save-button">Save changes</button>
             </div>
         </div>
     </div>
@@ -149,12 +142,14 @@
                     </div>
                     <div class="form-group">
                         <label for="actors-edit">Actors</label>
-                        <input type="text" class="form-control autocomplete" id="actors-edit" placeholder="Movie Actors">
+                        <input type="text" class="form-control autocomplete" id="actors-edit"
+                               placeholder="Movie Actors">
                     </div>
 
                     <div class="form-group">
                         <label for="director-edit">Director</label>
-                        <input type="text" class="form-control autocomplete" id="director-edit" placeholder="Movie Director">
+                        <input type="text" class="form-control autocomplete" id="director-edit"
+                               placeholder="Movie Director">
                     </div>
                     <div class="form-group">
                         <label for="genre-edit">Genre(s)</label>
@@ -197,7 +192,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="confirm-delete-button" class="btn btn-danger confirm-delete-button">Delete</button>
+                <button type="submit" id="confirm-delete-button" class="btn btn-danger confirm-delete-button">Delete
+                </button>
             </div>
         </div>
     </div>
@@ -207,18 +203,17 @@
 <script src="js/jquery-2.x-git.js"></script>
 <script src="js/keys.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
 <script src="js/index.js"></script>
 
 <!--get list of all movies-->
 
 <script>
-
-
-
-
-
 
 
 </script>

@@ -2,6 +2,8 @@
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
 
+//http://www.omdbapi.com/?apikey=movieAPI&
+
 //CLICK EVENTS LIVE HERE
 
 //MOVE SOMEWHERE ELSE. USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON)
@@ -99,13 +101,13 @@ let localMovies
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
         var html = '';
-        $('#loading').hide(3000);
+        $('#loading').hide(5000);
         $("#addForm").show();
         $('#movieContainer').empty();
 localMovies = movies
         movies.forEach(function (movie) {
             console.log(movie);
-            html += `<div class="card" style="width: 18rem; height: 25rem">
+            html += `<div class="card" style="width: 18rem; height: 25rem;">
             <div class="card-body">
     <h5 class="card-title">${movie.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
