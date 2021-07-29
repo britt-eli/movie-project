@@ -24,3 +24,11 @@ h3 {
     display: flex;
     justify-content: center;
 }
+#movieContainer {
+    margin: 2em auto;
+}
+.btn {
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}

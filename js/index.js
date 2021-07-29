@@ -6,7 +6,7 @@ let localMovies;
 const getAllMovies = () => fetch(serverURL).then(response => {
     response.json().then(movies => {
         var html = '';
-        $('#loading').hide(1000);
+        $('#loading').hide(3000);
         $("#addForm").show();
         $('#movieContainer').empty();
         localMovies = movies

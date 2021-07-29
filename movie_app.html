@@ -16,21 +16,22 @@
 </head>
 <body>
 <header>
-            <h1 class="text-center" id="movie-header">WE &#10084 MOVIES</h1>
+    <h1 class="text-center" id="movie-header">WE &#10084 MOVIES</h1>
 </header>
 
 <!--LOADING IMAGE-->
 <div class="row" id="loading">
-    <img id="loading-image" src="https://media.giphy.com/media/26DOMQa5Ib2SmaRZm/giphy.gif" alt="Loading..."/>
+    <img id="loading-image" src="https://media.giphy.com/media/MEiZ5h8lOkM7rwideE/giphy.gif" alt="Loading..."/>
 </div>
 
 <!-- Button trigger modal -->
+<div class="container">
+    <div class="row" id="addAMovie">
+        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#addMovieModal">
+            Add A Movie
+        </button>
+    </div>
 
-<div class="row" id="addAMovie">
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addMovieModal">
-        Add A Movie
-    </button>
-</div>
 
 <!-----MOVIE CONTAINER ----->
 
@@ -39,7 +40,7 @@
     <div id="movieContainer" class="row"></div>
 
 </section>
-
+</div>
 <!-- ADD A MOVIE MODAL -->
 
 <div class="modal fade" id="addMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -101,7 +102,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!------ Edit Movie Modal ------>
