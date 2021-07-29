@@ -15,23 +15,9 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <h1 class="navbar-brand text-center">WE &#10084 MOVIES</h1>
-        </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="jumbotron">
-        <h3 class="text-center"> SEARCH FOR ANY MOVIE</h3>
-        <form id="searchForm">
-            <input type="text" class="form-control" id="searchMovie" placeholder="Search Movie Does Not Work ATM">
-        </form>
-    </div>
-</div>
-
+<header>
+            <h1 class="text-center" id="movie-header">WE &#10084 MOVIES</h1>
+</header>
 
 <div class="row" id="loading">
     <img id="loading-image" src="https://media.giphy.com/media/3o7bu3XilJ5BOiSGic/giphy.gif" alt="Loading..."/>
@@ -40,7 +26,7 @@
 <!-- Button trigger modal -->
 
 <div class="row" id="addAMovie">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMovieModal">
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addMovieModal">
         Add A Movie
     </button>
 </div>
@@ -60,11 +46,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label for="new-poster-url">Movie Poster URL</label>
-                        <input type="text" class="form-control autocomplete" id="new-poster-url"
-                               placeholder="Movie Poster URL">
-                    </div>
+
                     <div class="form-group">
                         <label for="new-movie">Movie Title</label>
                         <input type="text" class="form-control autocomplete" id="new-movie"
@@ -119,7 +101,7 @@
 
 </section>
 
-<!------ Edit Modal ------>
+<!------ Edit Movie Modal ------>
 <div class="modal fade modal-style" id="editMovieModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -132,11 +114,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label for="poster-url-edit">Movie Title</label>
-                        <input type="text" class="form-control autocomplete" id="poster-url-edit"
-                               placeholder="Movie Poster URL">
-                    </div>
+
                     <div class="form-group">
                         <label for="movie-edit">Movie Title</label>
                         <input type="text" class="form-control autocomplete" id="movie-edit"

@@ -10,11 +10,29 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
     const OMDBAPI = `http://www.omdbapi.com/?apikey=${movieAPI}&t=${movieToAdd.title}`;
     fetch(OMDBAPI).then(response => {
         response.json().then(moviesFromOMDB => {
+            // {
+            //     "Title": "Toy Story",
+            //     "Year": "1995",
+            //     "Genre": "Animation, Adventure, Comedy",
+            //     "Director": "John Lasseter",
+            //     "Actors": "Tom Hanks, Tim Allen, Don Rickles",
+            //     "Plot": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
+            //     "Poster": "https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg",
+            movieToAdd.poster = moviesFromOMDB.Poster
 
-            // console.log(moviesFromOMDB)
+            //console.log(moviesFromOMDB)
 
             if (movieToAdd.plot === ""){
                 movieToAdd.plot = moviesFromOMDB.Plot
+            }
+            if( movieToAdd.actors === ""){
+                movieToAdd.actors = moviesFromOMDB.Actors
+            }
+            if (movieToAdd.director === ""){
+              movieToAdd.director = moviesFromOMDB.Director
+            }
+            if (movieToAdd.genre === ""){
+                movieToAdd.genre = moviesFromOMDB.Genre
             }
 
             addMovie(movieToAdd);
@@ -28,7 +46,7 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
     $("#save-button").click(function (e) {
         e.preventDefault();
         const movieToAdd = {
-            poster: $("new-poster-url").val(),
+            poster: $("#new-poster-url").val(),
             title: $("#new-movie").val(),
             rating: $('#new-rating').val(),
             genre: $('#new-genre').val(),
@@ -116,27 +134,27 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
 //     $('#addMovieModal').modal('hide');
 // });
 
-    let localMovies
+    let localMovies;
 //----------RENDER ALL MOVIES--------------->
     const getAllMovies = () => fetch(serverURL).then(response => {
         response.json().then(movies => {
             var html = '';
-            $('#loading').hide(5000);
+            $('#loading').hide(1000);
             $("#addForm").show();
             $('#movieContainer').empty();
             localMovies = movies
             movies.forEach(function (movie) {
                 console.log(movie);
-                html += `<div class="card" style="width: 18rem; height: 25rem;">
+                html += `<div class="card" style="width: 20rem; height: auto;">
             <div class="card-body">
             <img src="${movie.poster}" class="card-img-top" alt="...">
-    <h5 class="card-title">${movie.title}</h5>
+    <h3 class="card-title">${movie.title}</h3>
     <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
     <p class="card-text">${movie.plot}</p>
     <p class="card-text">Actors: ${movie.actors}</p>
     <p class="card-text">Director: ${movie.director}</p>
-    <p class="card-text">${movie.genre}</p>
-    <p class="card-text">${movie.rating} Star(s)</p>
+    <p class="card-text">Genre(s): ${movie.genre}</p>
+    <p class="card-text">Star Rating: ${movie.rating}</p>
     <button type="submit" data-id=${movie.id}  class="btn-md btn-primary editButton">Edit Movie</button>
     <button type="button" data-id=${movie.id} class="btn-md btn-danger deleteButton" >Delete Movie</button>
  
@@ -163,7 +181,7 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
 
 //----------------ADD MOVIE TO DATABASE, CONNECTED WITH THE #SAVE-BUTTON------------->
     const addMovie = (newMovie) => {
-        newMovie.title
+        // newMovie.title
 
         fetch(`${serverURL}`, {
             method: 'POST',
