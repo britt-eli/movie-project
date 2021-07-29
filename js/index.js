@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
 let localMovies;
