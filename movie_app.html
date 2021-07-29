@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>We Love Movies</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="css/movie-project-style.css">
@@ -19,8 +19,9 @@
             <h1 class="text-center" id="movie-header">WE &#10084 MOVIES</h1>
 </header>
 
+<!--LOADING IMAGE-->
 <div class="row" id="loading">
-    <img id="loading-image" src="https://media.giphy.com/media/3o7bu3XilJ5BOiSGic/giphy.gif" alt="Loading..."/>
+    <img id="loading-image" src="https://media.giphy.com/media/26DOMQa5Ib2SmaRZm/giphy.gif" alt="Loading..."/>
 </div>
 
 <!-- Button trigger modal -->
@@ -31,8 +32,15 @@
     </button>
 </div>
 
+<!-----MOVIE CONTAINER ----->
 
-<!-- add a movie modal -->
+<section class="container">
+
+    <div id="movieContainer" class="row"></div>
+
+</section>
+
+<!-- ADD A MOVIE MODAL -->
 
 <div class="modal fade" id="addMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -49,39 +57,39 @@
 
                     <div class="form-group">
                         <label for="new-movie">Movie Title</label>
-                        <input type="text" class="form-control autocomplete" id="new-movie"
+                        <input type="text" class="form-control" id="new-movie"
                                placeholder="Movie Name">
                     </div>
                     <div class="form-group">
                         <label for="new-year">Year</label>
-                        <input type="text" class="form-control autocomplete" id="new-year"
+                        <input type="text" class="form-control" id="new-year"
                                placeholder="Year of Release">
                     </div>
                     <div class="form-group">
                         <label for="new-plot">Plot</label>
-                        <input type="text" class="form-control autocomplete" id="new-plot" placeholder="Movie Plot">
+                        <input type="text" class="form-control" id="new-plot" placeholder="Movie Plot">
                     </div>
                     <div class="form-group">
                         <label for="new-actors">Actors</label>
-                        <input type="text" class="form-control autocomplete" id="new-actors" placeholder="Actors">
+                        <input type="text" class="form-control" id="new-actors" placeholder="Actors">
                     </div>
                     <div class="form-group">
                         <label for="new-director">Director</label>
-                        <input type="text" class="form-control autocomplete" id="new-director"
+                        <input type="text" class="form-control " id="new-director"
                                placeholder="Movie Director">
                     </div>
                     <div class="form-group">
                         <label for="new-genre">Genre(s)</label>
-                        <input type="text" class="form-control autocomplete" id="new-genre" placeholder="Genre(s)">
+                        <input type="text" class="form-control" id="new-genre" placeholder="Genre(s)">
                     </div>
                     <div class="form-group">
                         <label for="new-rating">Rating</label>
                         <select class="form-control" id="new-rating">
-                            <option>5 Stars</option>
-                            <option>4 Stars</option>
-                            <option>3 Stars</option>
-                            <option>2 Stars</option>
-                            <option>1 Star</option>
+                            <option>&#11088; &#11088; &#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088;</option>
+                            <option>&#11088;</option>
                         </select>
                     </div>
                 </form>
@@ -93,13 +101,8 @@
         </div>
     </div>
 </div>
-<!-----Movie List ----->
 
-<section class="container">
 
-    <div id="movieContainer" class="row"></div>
-
-</section>
 
 <!------ Edit Movie Modal ------>
 <div class="modal fade modal-style" id="editMovieModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
@@ -147,11 +150,11 @@
                     <div class="form-group">
                         <label for="rating-edit">Rating</label>
                         <select class="form-control" id="rating-edit">
-                            <option>5</option>
-                            <option>4</option>
-                            <option>3</option>
-                            <option>2</option>
-                            <option>1</option>
+                            <option>&#11088; &#11088; &#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088; &#11088;</option>
+                            <option>&#11088; &#11088;</option>
+                            <option>&#11088;</option>
                         </select>
                     </div>
                 </form>

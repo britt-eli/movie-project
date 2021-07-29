@@ -1,26 +1,54 @@
 "use strict"
 
 const serverURL = 'https://tulip-cloudy-kettle.glitch.me/movies';
+let localMovies;
+//----------RENDER ALL MOVIES--------------->
+const getAllMovies = () => fetch(serverURL).then(response => {
+    response.json().then(movies => {
+        var html = '';
+        $('#loading').hide(1000);
+        $("#addForm").show();
+        $('#movieContainer').empty();
+        localMovies = movies
+        movies.forEach(function (movie) {
+            console.log(movie);
+            html += `<div class="card" style="width: 18rem; height: auto;">
+            <div class="card-body">
+            <img src="${movie.poster}" class="card-img-top" alt="...">
+    <h3 class="card-title text-center">${movie.title}</h3>
+    <h6 class="card-subtitle mb-2 text-muted text-center">${movie.year}</h6>
+    <p class="card-text">${movie.plot}</p>
+    <p class="card-text">Actors: ${movie.actors}</p>
+    <p class="card-text">Director(s): ${movie.director}</p>
+    <p class="card-text">Genre(s): ${movie.genre}</p>
+    <p class="card-text">Star Rating: ${movie.rating}</p>
+    <button type="submit" data-id=${movie.id}  class="btn-md btn-primary editButton">Edit Movie</button>
+    <button type="button" data-id=${movie.id} class="btn-md btn-danger deleteButton" >Delete Movie</button>
+ 
+  </div>
+</div>`;
+            $('#movieContainer').html(html)
+        });
+    }).then(() => {
+        addEditClickEvent();
+        addDeleteClickEvent();
+    });
+});
+getAllMovies();
 
-
-
-//CLICK EVENTS LIVE HERE
+//-------------------ADD MOVIES FROM OMDB DATABASE----------------->
 
 const getMoviesFromOMBDAPI = (movieToAdd) => {
     const OMDBAPI = `http://www.omdbapi.com/?apikey=${movieAPI}&t=${movieToAdd.title}`;
     fetch(OMDBAPI).then(response => {
         response.json().then(moviesFromOMDB => {
-            // {
-            //     "Title": "Toy Story",
-            //     "Year": "1995",
-            //     "Genre": "Animation, Adventure, Comedy",
-            //     "Director": "John Lasseter",
-            //     "Actors": "Tom Hanks, Tim Allen, Don Rickles",
-            //     "Plot": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-            //     "Poster": "https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg",
-            movieToAdd.poster = moviesFromOMDB.Poster
+            // Object Properties for moviesFromOMDB: Title, Year, Genre, Director, Actors, Plot, Poster
+            //HOW THIS WORKS: users only need to enter the movie title and OMDB will populate the rest if left empty
+            //If a movie is a remake ex: Scarface 1932 vs Scarface 1983, user will need to enter the year
 
-            //console.log(moviesFromOMDB)
+            movieToAdd.poster = moviesFromOMDB.Poster //movie poster will auto-populate from OMDB, no user input needed
+
+            //If statements for fields left blank
 
             if (movieToAdd.plot === ""){
                 movieToAdd.plot = moviesFromOMDB.Plot
@@ -34,6 +62,9 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
             if (movieToAdd.genre === ""){
                 movieToAdd.genre = moviesFromOMDB.Genre
             }
+            if (movieToAdd.year === ""){
+                movieToAdd.year = moviesFromOMDB.Year
+            }
 
             addMovie(movieToAdd);
 
@@ -42,7 +73,7 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
 }
 
 
-//----------USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON)------>
+//----------USED TO SAVE MOVIE TO DB (ADD A MOVIE BUTTON) ***INFO FROM LAST ADDED MOVIE STILL THERE. BROWSER ISSUE?*** ------>
     $("#save-button").click(function (e) {
         e.preventDefault();
         const movieToAdd = {
@@ -61,12 +92,13 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
         $('#addMovieModal').modal('hide');
     });
 
-//-----------------------EDIT CLICK EVENT ON MODAL CARD. INFORMATION FROM LAST EDITED MOVIE GETS OVERRIDDEN BY NEW INFO.------->
+//-----------------------EDIT CLICK EVENT ON MODAL CARD. INFORMATION FROM LAST EDITED MOVIE GETS OVERRIDDEN BY NEW INFO (CORRECTED).------->
     function addEditClickEvent() {
         $('.editButton').click(function (e) {
             e.preventDefault();
             const movieID = $(this).attr('data-id')
             const originalMovie = localMovies.filter(movie => movieID == movie.id)[0]
+            const moviePoster = originalMovie.poster
             $('#movie-edit').val(originalMovie.title);
             $('#rating-edit').val(originalMovie.rating);
             $('#plot-edit').val(originalMovie.plot);
@@ -85,7 +117,7 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
                 let editedGenre = $('#genre-edit').val();
                 let editedDirector = $('#director-edit').val()
                 let editedMovie = { //create an edited new movie object
-                    id: movieID, title: editedTitle, rating: editedRating, plot: editedPlot,
+                    poster: moviePoster, id: movieID, title: editedTitle, rating: editedRating, plot: editedPlot,
                     year: editedYear, actors: editedActors, director: editedDirector, genre: editedGenre
                 };
                 updateMovie(editedMovie).then(() => {
@@ -106,14 +138,14 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
         })
     }
 
-//-----------------------DELETE CLICK EVENT. NEED TO UPDATE SUBMIT WHEN ASKED ARE YOU SURE------------->
+//-----------------------DELETE CLICK EVENT. NEED TO UPDATE SUBMIT WHEN ASKED ARE YOU SURE (FIXED)------------->
     function addDeleteClickEvent() {
         $('.deleteButton').click(function (e) {
             e.preventDefault();
             $('#deleteMovieModal').modal('show');
             let deletedMovieID = $(this).attr('data-id'); //cannot use this inside => function
             console.log(deletedMovieID);
-            //$('#confirm-delete-button').off();
+
             $('#confirm-delete-button').click(function () {
                 deleteMovie(deletedMovieID).then(() => {
                     $('#movieContainer').empty();
@@ -125,51 +157,6 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
 
         });
     }
-
-// $("#confirm-delete-button").click(function (e) {
-//     e.preventDefault();
-//     deleteMovie($("#new-movie").val(), $('#new-rating').val(), $('#new-plot').val(),
-//         $('#new-actors').val(), $('#new-director').val(), $('#new-year').val(), $('#new-genre').val());
-//     // getAllMovies()
-//     $('#addMovieModal').modal('hide');
-// });
-
-    let localMovies;
-//----------RENDER ALL MOVIES--------------->
-    const getAllMovies = () => fetch(serverURL).then(response => {
-        response.json().then(movies => {
-            var html = '';
-            $('#loading').hide(1000);
-            $("#addForm").show();
-            $('#movieContainer').empty();
-            localMovies = movies
-            movies.forEach(function (movie) {
-                console.log(movie);
-                html += `<div class="card" style="width: 20rem; height: auto;">
-            <div class="card-body">
-            <img src="${movie.poster}" class="card-img-top" alt="...">
-    <h3 class="card-title">${movie.title}</h3>
-    <h6 class="card-subtitle mb-2 text-muted">${movie.year}</h6>
-    <p class="card-text">${movie.plot}</p>
-    <p class="card-text">Actors: ${movie.actors}</p>
-    <p class="card-text">Director: ${movie.director}</p>
-    <p class="card-text">Genre(s): ${movie.genre}</p>
-    <p class="card-text">Star Rating: ${movie.rating}</p>
-    <button type="submit" data-id=${movie.id}  class="btn-md btn-primary editButton">Edit Movie</button>
-    <button type="button" data-id=${movie.id} class="btn-md btn-danger deleteButton" >Delete Movie</button>
- 
-  </div>
-</div>`;
-                $('#movieContainer').html(html)
-            });
-        }).then(() => {
-            addEditClickEvent();
-            addDeleteClickEvent();
-        });
-    });
-    getAllMovies();
-
-//CLICK EVENTS FOR EDIT AND DELETE ON CARDS/MODAL
 
 // get single movie
     const getAMovie = id => fetch(`${serverURL}/${id}`)
@@ -198,7 +185,6 @@ const getMoviesFromOMBDAPI = (movieToAdd) => {
             })
             .catch(console.error);
     }
-
 
 //---------------------UPDATE MOVIE------------------------------------>
     const updateMovie = movie => fetch(`${serverURL}/${movie.id}`, {
